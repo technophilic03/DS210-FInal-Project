@@ -67,3 +67,38 @@ pub fn perform_clustering(graph: &UnGraph<u32, ()>) -> Vec<Vec<u32>> {
     // Collect all clusters into a vector
     clusters.into_values().collect()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use petgraph::graph::UnGraph;
+
+    #[test] // Test for empty graph
+    fn test_empty_graph_compute_centrality_measures() {
+        let graph: UnGraph<u32, ()> = UnGraph::new_undirected();
+        let centrality = compute_centrality_measures(&graph);
+        assert!(
+            centrality.is_empty(),
+            "Centrality should be empty for an empty graph"
+        );
+    }
+
+    #[test] // Test for single node graph
+    fn test_multiple_nodes_compute_centrality_measures() {
+        let mut graph: UnGraph<u32, ()> = UnGraph::new_undirected();
+        let n1 = graph.add_node(1);
+        let n2 = graph.add_node(2);
+        let n3 = graph.add_node(3);
+        graph.add_edge(n1, n2, ());
+        graph.add_edge(n2, n3, ());
+        let centrality = compute_centrality_measures(&graph);
+        assert!(
+            !centrality.is_empty(),
+            "Centrality should be calculated for all nodes"
+        );
+        assert_eq!(
+            centrality[&2], 1.0,
+            "Node 2 should have the highest centrality"
+        );
+    }
+}

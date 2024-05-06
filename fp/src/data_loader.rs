@@ -65,3 +65,29 @@ fn load_network_data(file_path: &str) -> Result<UnGraph<u32, ()>, Box<dyn std::e
     }
     Ok(graph)
 }
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs::{self, File};
+    use std::io::Write;
+
+    // Helper function to create a temp file with content
+    fn temp_file_with_content(content: &str) -> String {
+        let path = "temp_test_file.csv";
+        let mut file = File::create(path).unwrap();
+        file.write_all(content.as_bytes()).unwrap();
+        path.to_string()
+    }
+
+    #[test] // Test the preprocess_associations function
+    fn test_empty_input_build_and_preprocess_graph() {
+        let result = build_and_preprocess_graph("", "");
+        assert!(result.is_err());
+    }
+
+    #[test] // Test the preprocess_associations function
+    fn test_non_existent_file_preprocess_associations() {
+        let result = preprocess_associations("non_existent.csv", "output.csv");
+        assert!(result.is_err());
+    }
+}

@@ -77,3 +77,45 @@ pub fn export_clustering_to_csv(
     writer.flush()?;
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use petgraph::graph::UnGraph;
+    use std::fs;
+    use std::io::{self, BufReader, Read};
+
+    // Helper function to check file content
+    fn read_file_content(file_path: &str) -> io::Result<String> {
+        let file = fs::File::open(file_path)?;
+        let mut buf_reader = BufReader::new(file);
+        let mut contents = String::new();
+        buf_reader.read_to_string(&mut contents)?;
+        Ok(contents)
+    }
+
+    #[test] // Test for empty graph
+    fn test_empty_graph_export_graph_for_visualization() {
+        let graph: UnGraph<u32, ()> = UnGraph::new_undirected();
+        let file_path = "temp_empty_graph.csv";
+        export_graph_for_visualization(&graph, file_path).unwrap();
+        let content = read_file_content(file_path).unwrap();
+        assert!(
+            content.is_empty(),
+            "The file should be empty for an empty graph"
+        );
+        fs::remove_file(file_path).unwrap();
+    }
+
+    #[test] // Test for file creation
+    fn test_file_creation_export_graph_for_visualization() {
+        let graph: UnGraph<u32, ()> = UnGraph::new_undirected();
+        let file_path = "temp_new_file.csv";
+        export_graph_for_visualization(&graph, file_path).unwrap();
+        assert!(
+            fs::metadata(file_path).is_ok(),
+            "The file should be created"
+        );
+        fs::remove_file(file_path).unwrap();
+    }
+}

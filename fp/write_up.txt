@@ -1,0 +1,31 @@
+Yaoan Leng
+DS210
+
+In this final project for DS210, I examined the data set for protein-gene and disease pathway and tried to find out some releationships between protein and diseases. The original idea of the project is to predict genes assoicated to a certain disease, but I gave up on that because of complexity.
+
+The current project involves the analysis of disease pathways through graph theory, focusing on the relationship of genes and diseases utilizing centrality measures, clustering analysis, and visualization.The project aims to identify key proteins and get a sense of what the overall disease pathway looks like. With further improvements, this analysis can help uncover potential drug targets and provide insights into the complex mechanisms of diseases.
+
+The project consists of several key components*:
+
+1. Data Preprocessing: Converts raw biological data into a format suitable for graph-based analysis, including associations between diseases and proteins.
+2. Graph Construction: Builds a network graph where nodes represent proteins or genes, and edges represent interactions or associations.
+3. Centrality Analysis: Computes centrality metrics to identify important nodes within the network.
+4. Clustering Analysis: Detects clusters or communities within the network, highlighting closely interacting groups of proteins or genes. 
+5. Visualization: Generates visual representations of the network, centrality, and clusters to facilitate interpretation and analysis.
+
+*All components except #5 are done in Rust. Plot visualizations are done in Python using Jupyter Notebook. 
+
+To run the project, download all files and use cargo run under the "fp" Rust project directory. To view visualizations, read the ipynb under src folder.
+
+There are three outputs: centrality, clustering, and graph data. Centrality output contains node IDs and their centrality scores. Clustering output lists clusters detected in the network, with nodes grouped by their cluster IDs. Graph Data (graph_data.csv) describes the edges in the network, showing which nodes are connected.
+
+Some conclusions I got from the analysis (there are more):
+
+- The result shows that there is a large, dense cluster of nodes in the center of the graph with a high concentration of edges. This suggests a highly interconnected group where many nodes are directly linked to each other. This group likely plays a critical role within the network, indicating that most genes are assoicated together in a protein-disease pathway. Around the central group, there are several smaller clusters and isolated nodes. These might represent sub-groups within the network that are less connected to the main group but might have their own internal structure and connections.
+
+- In the centrality scores analysis, nodes might represet proteins that play important role in disease mechanism. The large size of the dominant cluster suggests a highly interconnected subnetwork within the overall graph, potentially encompassing a wide variety of nodes that share functional characteristics or are involved in similar pathways.
+
+- The entities like 7124, 6648, and others shown dominate the associations, suggesting they might be central to understanding the mechanisms or effects of certain diseases.
+
+
+
