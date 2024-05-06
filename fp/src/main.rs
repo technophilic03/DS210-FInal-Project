@@ -4,6 +4,7 @@ mod utils;
 
 use std::error::Error;
 
+/// Main function to run the graph analysis pipeline.
 fn main() -> Result<(), Box<dyn Error>> {
     // Load and preprocess CSV data for graph construction.
     let graph = data_loader::build_and_preprocess_graph(
@@ -19,6 +20,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let clusters = graph_analysis::perform_clustering(&graph);
     println!("Clusters: {:?}", clusters);
 
+    // Export the results to CSV files.
     utils::export_centrality_to_csv(&centrality_results, "data/centrality.csv")?;
     utils::export_clustering_to_csv(&clusters, "data/clusters.csv")?;
 

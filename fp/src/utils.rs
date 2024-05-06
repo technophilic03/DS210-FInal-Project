@@ -6,12 +6,7 @@ use std::error::Error;
 use std::fs::{self, File};
 use std::path::Path;
 
-/// Exports the graph data to a CSV file suitable for visualization in Python.
-/// If the output file does not exist, it creates a new one.
-///
-/// # Arguments
-/// * `graph` - The graph data structure containing nodes and edges.
-/// * `file_path` - The file path where the CSV should be saved.
+/// Exports the graph data for visualization in Python.
 pub fn export_graph_for_visualization(
     graph: &UnGraph<u32, ()>,
     file_path: &str,
@@ -52,7 +47,7 @@ pub fn export_centrality_to_csv(
     }
     let mut writer = Writer::from_path(file_path)?;
     writer.write_record(&["node", "centrality"])?;
-
+    // Write the centrality scores to the CSV file.
     for (node, score) in centrality {
         writer.write_record(&[node.to_string(), score.to_string()])?;
     }
